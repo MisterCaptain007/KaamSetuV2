@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaamSetu – Labour Contractor Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F4600C;
+    --orange-light: #FF8A3D;
+    --dark: #0D1117;
+    --dark2: #161B22;
+    --dark3: #21262D;
+    --border: #30363D;
+    --text: #E6EDF3;
+    --muted: #8B949E;
+    --white: #ffffff;
+    --green: #3FB950;
+    --blue: #58A6FF;
+    --yellow: #D29922;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 64px;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.7rem; font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo span { color: var(--orange); }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex; gap: 32px;
+  }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    display: flex; gap: 12px;
+  }
+  .btn {
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 0.875rem; font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'Noto Sans', sans-serif;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(244,96,12,0.35); }
+
+  /* HERO */
+  .hero {
+    padding: 140px 5% 80px;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(244,96,12,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(88,166,255,0.06) 0%, transparent 70%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(244,96,12,0.1);
+    border: 1px solid rgba(244,96,12,0.25);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.8rem; color: var(--orange-light);
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .hero-btns .btn { padding: 12px 28px; font-size: 0.95rem; }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: var(--white);
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); }
+
+  /* Hero Visual */
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 16px;
+    animation: fadeLeft 0.7s 0.2s ease both;
+  }
+
+  .card-float {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.3s;
+  }
+  .card-float:hover { transform: translateY(-4px); border-color: var(--orange); }
+
+  .card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .av-orange { background: rgba(244,96,12,0.2); }
+  .av-blue { background: rgba(88,166,255,0.15); }
+  .av-green { background: rgba(63,185,80,0.15); }
+
+  .card-name { font-weight: 600; font-size: 0.95rem; }
+  .card-sub { font-size: 0.78rem; color: var(--muted); }
+
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .badge-orange { background: rgba(244,96,12,0.15); color: var(--orange-light); border: 1px solid rgba(244,96,12,0.2); }
+  .badge-green { background: rgba(63,185,80,0.12); color: var(--green); border: 1px solid rgba(63,185,80,0.2); }
+  .badge-blue { background: rgba(88,166,255,0.12); color: var(--blue); border: 1px solid rgba(88,166,255,0.2); }
+  .badge-yellow { background: rgba(210,153,34,0.12); color: var(--yellow); border: 1px solid rgba(210,153,34,0.2); }
+
+  /* SECTION */
+  section { padding: 80px 5%; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--orange); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700; margin-bottom: 16px;
+  }
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.6; max-width: 560px; }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; margin-top: 60px; align-items: start;
+  }
+
+  .tab-switch {
+    display: flex; gap: 0;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px;
+    margin-bottom: 32px; width: fit-content;
+  }
+  .tab-btn {
+    padding: 8px 20px; border-radius: 6px;
+    border: none; background: transparent;
+    color: var(--muted); font-size: 0.875rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .tab-btn.active {
+    background: var(--orange); color: #fff;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 20px;
+    padding: 20px 0;
+    border-left: 2px solid var(--border);
+    padding-left: 28px;
+    position: relative;
+  }
+  .step-dot {
+    position: absolute; left: -10px; top: 24px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 2px solid var(--border);
+  }
+  .step.active .step-dot { background: var(--orange); border-color: var(--orange); }
+  .step.active { border-color: var(--orange); }
+
+  .step-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem; font-weight: 700; color: var(--border);
+    min-width: 32px;
+  }
+  .step.active .step-num { color: var(--orange); }
+  .step-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+  .step-info p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; }
+
+  /* FEATURES */
+  .features-bg { background: var(--dark2); }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; margin-top: 48px;
+  }
+  .feature-card {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: transparent;
+    transition: background 0.3s;
+  }
+  .feature-card:hover { border-color: rgba(244,96,12,0.4); transform: translateY(-4px); }
+  .feature-card:hover::before { background: var(--orange); }
+  .feature-icon {
+    font-size: 2rem; margin-bottom: 16px;
+    width: 52px; height: 52px;
+    background: rgba(244,96,12,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+  .feature-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; }
+
+  /* JOB LISTINGS */
+  .jobs-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 16px; margin-top: 48px;
+  }
+  .job-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .job-card:hover { border-color: var(--orange); }
+  .job-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .job-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  .job-company { font-size: 0.82rem; color: var(--muted); }
+  .job-meta { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 0; }
+  .job-meta span { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .job-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--border); }
+  .wage { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--green); }
+  .wage span { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
+
+  /* WORKERS */
+  .workers-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; margin-top: 48px;
+  }
+  .worker-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    text-align: center; transition: all 0.3s;
+  }
+  .worker-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+  .worker-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--dark3);
+    margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    border: 3px solid var(--border);
+  }
+  .worker-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  .worker-skill { font-size: 0.82rem; color: var(--orange-light); margin-bottom: 14px; }
+  .worker-stats {
+    display: flex; justify-content: space-evenly;
+    border-top: 1px solid var(--border); padding-top: 14px;
+    margin-bottom: 16px;
+  }
+  .ws-item { text-align: center; }
+  .ws-val { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; }
+  .ws-key { font-size: 0.72rem; color: var(--muted); }
+  .stars { color: var(--yellow); font-size: 0.8rem; margin-bottom: 4px; }
+
+  /* PRICING */
+  .pricing-bg { background: var(--dark2); }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px; align-items: start;
+  }
+  .price-card {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    position: relative;
+  }
+  .price-card.popular {
+    border-color: var(--orange);
+    transform: scale(1.04);
+  }
+  .popular-tag {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--orange); color: #fff;
+    padding: 4px 16px; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  .plan-name { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+  .plan-price {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.8rem; font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .plan-price sup { font-size: 1.2rem; vertical-align: top; margin-top: 8px; display: inline-block; }
+  .plan-price sub { font-size: 0.9rem; color: var(--muted); }
+  .plan-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .plan-features li { font-size: 0.875rem; display: flex; gap: 10px; }
+  .plan-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .plan-features li.off::before { content: '✗'; color: var(--border); }
+  .plan-features li.off { color: var(--muted); }
+
+  /* REGISTER CTA */
+  .cta-section {
+    padding: 80px 5%;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(244,96,12,0.08) 0%, transparent 70%),
+      var(--dark);
+  }
+  .cta-inner {
+    max-width: 900px; margin: 0 auto;
+    text-align: center;
+  }
+  .cta-inner h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; margin-bottom: 16px;
+  }
+  .cta-inner p { color: var(--muted); font-size: 1.05rem; margin-bottom: 40px; }
+  .cta-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-bottom: 40px;
+  }
+  .cta-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    text-align: left;
+    transition: all 0.3s;
+  }
+  .cta-card:hover { border-color: var(--orange); }
+  .cta-card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .cta-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
+  .cta-card p { font-size: 0.875rem; color: var(--muted); margin-bottom: 20px; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    width: 90%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 28px;
+  }
+  .modal-title { font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; font-weight: 700; }
+  .modal-close {
+    width: 32px; height: 32px;
+    border-radius: 50%; background: var(--dark3);
+    border: 1px solid var(--border);
+    color: var(--muted); font-size: 1.1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { color: var(--text); border-color: var(--orange); }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: var(--muted); }
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: 'Noto Sans', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--orange); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid var(--border);
+    padding: 48px 5% 24px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; max-width: 1200px; margin: 0 auto;
+    margin-bottom: 40px;
+  }
+  .footer-brand p { font-size: 0.875rem; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+  .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; color: var(--text); }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--orange); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .lang-toggle {
+    display: flex; gap: 8px;
+  }
+  .lang-btn {
+    padding: 4px 12px; border-radius: 4px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    font-size: 0.78rem; cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .lang-btn.active { border-color: var(--orange); color: var(--orange); }
+
+  /* SEARCH */
+  .search-bar {
+    display: flex;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 48px;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus-within { border-color: var(--orange); }
+  .search-input {
+    flex: 1; padding: 14px 20px;
+    background: transparent; border: none; outline: none;
+    color: var(--text); font-size: 0.95rem;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .search-select {
+    padding: 14px; background: var(--dark3);
+    border: none; border-left: 1px solid var(--border);
+    color: var(--muted); font-size: 0.85rem;
+    cursor: pointer; outline: none;
+    font-family: 'Noto Sans', sans-serif;
+    color: var(--text);
+  }
+  .search-btn {
+    padding: 14px 24px;
+    background: var(--orange); border: none;
+    color: #fff; font-weight: 700; cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .search-btn:hover { background: var(--orange-light); }
+
+  /* TESTIMONIALS */
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; margin-top: 48px;
+  }
+  .testi-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+  }
+  .testi-quote { font-size: 2rem; color: var(--orange); margin-bottom: 12px; line-height: 1; }
+  .testi-text { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+  .testi-person { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar { width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; background: var(--dark3); display: flex; align-items: center; justify-content: center; }
+  .testi-name { font-weight: 600; font-size: 0.9rem; }
+  .testi-loc { font-size: 0.78rem; color: var(--muted); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+    display: inline-block;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .how-grid, .features-grid, .jobs-grid, .workers-grid, .pricing-grid, .cta-cards, .testi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">🏗</div>
+    Kaam<span>Setu</span>
+  </a>
+  <ul>
+    <li><a href="#how" data-i18n="nav-how">How it works</a></li>
+    <li><a href="#jobs" data-i18n="nav-jobs">Jobs</a></li>
+    <li><a href="#workers" data-i18n="nav-workers">Workers</a></li>
+    <li><a href="#pricing" data-i18n="nav-pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="btn btn-outline" onclick="openModal('login')" data-i18n="nav-login">Login</button>
+    <button class="btn btn-primary" onclick="openModal('register')" data-i18n="nav-post">Post a Job</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <span class="live-dot"></span>
+        <span data-i18n="hero-badge">2,400+ workers available today</span>
+      </div>
+      <h1 data-i18n="hero-h1">Connect with Skilled <em>Labour</em> in 24 Hours</h1>
+      <p data-i18n="hero-p">KaamSetu is India's trusted platform connecting contractors with skilled & unskilled labour for construction, factories, events, and more. Fast. Verified. Reliable.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="hero-btn-worker">🔨 I'm a Worker</button>
+        <button class="btn btn-outline" onclick="openModal('contractor')" data-i18n="hero-btn-cont">🏗 I'm a Contractor</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">18K+</div>
+          <div class="stat-label" data-i18n="stat-workers">Registered Workers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3.4K+</div>
+          <div class="stat-label" data-i18n="stat-contractors">Contractors</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">12K+</div>
+          <div class="stat-label" data-i18n="stat-jobs">Jobs Filled</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="card-float">
+        <div class="card-header">
+          <div class="avatar av-orange">👷</div>
+          <div>
+            <div class="card-name">Suresh Kumar</div>
+            <div class="card-sub">⭐ 4.8 · Nashik, MH · Available Now</div>
+          </div>
+          <button class="btn btn-primary" style="margin-left:auto;padding:6px 14px;font-size:0.8rem">Hire</button>
+        </div>
+        <div class="badge-row">
+          <span class="badge badge-orange">Electrician</span>
+          <span class="badge badge-green">8 yrs exp</span>
+          <span class="badge badge-blue">₹700/day</span>
+        </div>
+      </div>
+
+      <div class="card-float">
+        <div class="card-header">
+          <div class="avatar av-blue">🏢</div>
+          <div>
+            <div class="card-name">Raj Constructions Pvt Ltd</div>
+            <div class="card-sub">📍 Pune · Construction</div>
+          </div>
+        </div>
+        <div class="job-title" style="margin-bottom:10px;">Need 15 Helpers — Residential Project</div>
+        <div class="badge-row">
+          <span class="badge badge-yellow">15 workers</span>
+          <span class="badge badge-green">₹500/day</span>
+          <span class="badge badge-blue">30 days</span>
+        </div>
+      </div>
+
+      <div class="card-float" style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:4px">New match found!</div>
+          <div style="font-weight:600;font-size:0.95rem">3 Plumbers near you</div>
+        </div>
+        <div style="font-size:1.8rem">🎯</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div style="background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 5%">
+  <div class="section-inner">
+    <div class="search-bar">
+      <input class="search-input" type="text" data-i18n-ph="search-placeholder" placeholder="Search by skill (e.g. Electrician, Welder, Helper)...">
+      <select class="search-select">
+        <option data-i18n="loc-all">All Locations</option>
+        <option>Mumbai</option>
+        <option>Pune</option>
+        <option>Nashik</option>
+        <option>Nagpur</option>
+        <option>Aurangabad</option>
+      </select>
+      <select class="search-select">
+        <option data-i18n="cat-all">All Categories</option>
+        <option data-i18n="cat-const">Construction</option>
+        <option data-i18n="cat-factory">Factory</option>
+        <option data-i18n="cat-event">Event</option>
+        <option data-i18n="cat-elec">Electrical</option>
+      </select>
+      <button class="search-btn" data-i18n="search-btn">🔍 Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-label" data-i18n="how-label">How It Works</div>
+    <div class="section-title" data-i18n="how-title">Simple. Fast. Trusted.</div>
+    <div class="section-sub" data-i18n="how-sub">Whether you're looking for work or need workers — KaamSetu gets you connected in hours, not days.</div>
+
+    <div class="how-grid">
+      <div>
+        <div class="tab-switch">
+          <button class="tab-btn active" onclick="switchTab(this,'worker-steps')" data-i18n="tab-worker">👷 For Workers</button>
+          <button class="tab-btn" onclick="switchTab(this,'contractor-steps')" data-i18n="tab-contractor">🏗 For Contractors</button>
+        </div>
+
+        <div id="worker-steps" class="steps">
+          <div class="step active">
+            <div class="step-dot"></div>
+            <div class="step-num">01</div>
+            <div class="step-info">
+              <h3 data-i18n="ws1-h">Register & Build Profile</h3>
+              <p data-i18n="ws1-p">Sign up with your mobile number. Add your skills, experience, location, and expected daily wage. Takes just 5 minutes.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">02</div>
+            <div class="step-info">
+              <h3 data-i18n="ws2-h">Browse Nearby Jobs</h3>
+              <p data-i18n="ws2-p">See job postings from contractors in your city. Filter by skill, wage, and duration to find the right fit.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">03</div>
+            <div class="step-info">
+              <h3 data-i18n="ws3-h">Apply & Get Hired</h3>
+              <p data-i18n="ws3-p">Apply with one tap. Chat with the contractor directly. Get hired and earn daily wages.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">04</div>
+            <div class="step-info">
+              <h3 data-i18n="ws4-h">Rate & Build Reputation</h3>
+              <p data-i18n="ws4-p">After every job, rate the contractor and receive a rating. A good profile gets more jobs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="contractor-steps" class="steps" style="display:none">
+          <div class="step active">
+            <div class="step-dot"></div>
+            <div class="step-num">01</div>
+            <div class="step-info">
+              <h3 data-i18n="cs1-h">Register Your Company</h3>
+              <p data-i18n="cs1-p">Create a contractor profile with your company name, work type, and location. OTP-verified instantly.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">02</div>
+            <div class="step-info">
+              <h3 data-i18n="cs2-h">Post Labour Requirements</h3>
+              <p data-i18n="cs2-p">Describe how many workers you need, the skill required, duration, location, and daily wage offered.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">03</div>
+            <div class="step-info">
+              <h3 data-i18n="cs3-h">Get Matched Instantly</h3>
+              <p data-i18n="cs3-p">Our system shows verified, nearby workers matching your requirements. Shortlist the best profiles.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-dot"></div>
+            <div class="step-num">04</div>
+            <div class="step-info">
+              <h3 data-i18n="cs4-h">Connect & Start Work</h3>
+              <p data-i18n="cs4-p">Chat or call shortlisted workers directly. Finalize and start your project on time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card-float" style="margin-bottom:16px">
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:16px;font-weight:600">ACTIVE JOB POST</div>
+          <div class="job-title">Welder + Fitter for Pune Factory</div>
+          <div style="font-size:0.85rem;color:var(--muted);margin:8px 0 16px">Pimpri-Chinchwad Industrial Area • Start: Feb 22</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;background:var(--dark3);border-radius:8px;padding:16px">
+            <div><div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--orange)">12</div><div style="font-size:0.72rem;color:var(--muted)">Applied</div></div>
+            <div><div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--blue)">5</div><div style="font-size:0.72rem;color:var(--muted)">Shortlisted</div></div>
+            <div><div style="font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--green)">2</div><div style="font-size:0.72rem;color:var(--muted)">Hired</div></div>
+          </div>
+        </div>
+        <div class="card-float" style="background:rgba(244,96,12,0.05);border-color:rgba(244,96,12,0.2)">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div style="font-size:2rem">🎯</div>
+            <div>
+              <div style="font-weight:700;margin-bottom:4px" data-i18n="match-title">AI-Powered Matching</div>
+              <div style="font-size:0.85rem;color:var(--muted)" data-i18n="match-p">Our system automatically matches your job post with the best-fit workers in your area based on skill, experience, and availability.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-bg">
+  <div class="section-inner">
+    <div class="section-label" data-i18n="feat-label">Platform Features</div>
+    <div class="section-title" data-i18n="feat-title">Everything You Need to Hire Fast</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3 data-i18n="f1-h">Location-Based Matching</h3>
+        <p data-i18n="f1-p">Automatically connects workers and contractors within the same city or nearby area for faster mobilisation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3 data-i18n="f2-h">OTP Verified Profiles</h3>
+        <p data-i18n="f2-p">Every worker and contractor is verified via mobile OTP. Aadhaar upload available for extra trust.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3 data-i18n="f3-h">In-App Chat</h3>
+        <p data-i18n="f3-p">Message directly within the platform. Share phone numbers only after confirming the job for privacy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⭐</div>
+        <h3 data-i18n="f4-h">Two-Way Rating System</h3>
+        <p data-i18n="f4-p">Workers rate contractors and contractors rate workers. Build a trusted reputation over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3 data-i18n="f5-h">SMS Notifications</h3>
+        <p data-i18n="f5-p">Get SMS alerts when a job is posted nearby, when someone applies, or when a message arrives.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3 data-i18n="f6-h">Hindi + English</h3>
+        <p data-i18n="f6-p">Full bilingual support. Workers and contractors can use the platform in their preferred language.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section id="jobs">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="section-label" data-i18n="jobs-label">Live Job Posts</div>
+        <div class="section-title" data-i18n="jobs-title">Latest Opportunities</div>
+      </div>
+      <button class="btn btn-outline" onclick="openModal('contractor')" data-i18n="post-job">+ Post a Job</button>
+    </div>
+    <div class="jobs-grid">
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <div class="job-title">15 Civil Helpers Required</div>
+            <div class="job-company">Raj Constructions • Pune</div>
+          </div>
+          <span class="badge badge-orange" data-i18n="urgent">Urgent</span>
+        </div>
+        <div class="job-meta">
+          <span>🗓 30 days</span>
+          <span>👥 15 workers</span>
+          <span>📍 Baner, Pune</span>
+        </div>
+        <div class="badge-row" style="margin-bottom:14px">
+          <span class="badge badge-blue">Construction</span>
+          <span class="badge badge-green">Unskilled</span>
+        </div>
+        <div class="job-footer">
+          <div class="wage">₹500 <span>/ day</span></div>
+          <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="apply-now">Apply Now</button>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <div class="job-title">Welder & Fitter — Factory</div>
+            <div class="job-company">Indus Industries • PCMC</div>
+          </div>
+          <span class="badge badge-green" data-i18n="open">Open</span>
+        </div>
+        <div class="job-meta">
+          <span>🗓 3 months</span>
+          <span>👥 6 workers</span>
+          <span>📍 Chinchwad</span>
+        </div>
+        <div class="badge-row" style="margin-bottom:14px">
+          <span class="badge badge-blue">Factory</span>
+          <span class="badge badge-orange">Skilled</span>
+        </div>
+        <div class="job-footer">
+          <div class="wage">₹900 <span>/ day</span></div>
+          <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="apply-now">Apply Now</button>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <div class="job-title">Electricians for Site Work</div>
+            <div class="job-company">PowerTech • Mumbai</div>
+          </div>
+          <span class="badge badge-green" data-i18n="open">Open</span>
+        </div>
+        <div class="job-meta">
+          <span>🗓 45 days</span>
+          <span>👥 4 workers</span>
+          <span>📍 Andheri, Mumbai</span>
+        </div>
+        <div class="badge-row" style="margin-bottom:14px">
+          <span class="badge badge-blue">Electrical</span>
+          <span class="badge badge-orange">Skilled</span>
+        </div>
+        <div class="job-footer">
+          <div class="wage">₹800 <span>/ day</span></div>
+          <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="apply-now">Apply Now</button>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <div class="job-title">Event Setup Crew (Weekend)</div>
+            <div class="job-company">EventPro • Nashik</div>
+          </div>
+          <span class="badge badge-yellow" data-i18n="closing">Closing Soon</span>
+        </div>
+        <div class="job-meta">
+          <span>🗓 2 days</span>
+          <span>👥 20 workers</span>
+          <span>📍 Nashik Road</span>
+        </div>
+        <div class="badge-row" style="margin-bottom:14px">
+          <span class="badge badge-blue">Event</span>
+          <span class="badge badge-green">Unskilled</span>
+        </div>
+        <div class="job-footer">
+          <div class="wage">₹600 <span>/ day</span></div>
+          <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="apply-now">Apply Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKERS -->
+<section id="workers" style="background:var(--dark2)">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="section-label" data-i18n="workers-label">Worker Profiles</div>
+        <div class="section-title" data-i18n="workers-title">Verified & Ready to Work</div>
+      </div>
+      <button class="btn btn-outline" onclick="openModal('worker')" data-i18n="join-worker">Join as Worker</button>
+    </div>
+    <div class="workers-grid">
+      <div class="worker-card">
+        <div class="worker-avatar">👷</div>
+        <div class="worker-name">Rajan Patil</div>
+        <div class="worker-skill">⚡ Electrician</div>
+        <div class="stars">★★★★★</div>
+        <div class="worker-stats">
+          <div class="ws-item"><div class="ws-val">7</div><div class="ws-key">Yrs Exp</div></div>
+          <div class="ws-item"><div class="ws-val">48</div><div class="ws-key">Jobs Done</div></div>
+          <div class="ws-item"><div class="ws-val">₹750</div><div class="ws-key">Per Day</div></div>
+        </div>
+        <div class="badge-row" style="justify-content:center;margin-bottom:16px">
+          <span class="badge badge-green" data-i18n="avail-now">Available Now</span>
+          <span class="badge badge-blue">Pune</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="openModal('contractor')" data-i18n="contact">Contact</button>
+      </div>
+
+      <div class="worker-card">
+        <div class="worker-avatar">🔧</div>
+        <div class="worker-name">Mangesh Shinde</div>
+        <div class="worker-skill">🔩 Welder & Fitter</div>
+        <div class="stars">★★★★☆</div>
+        <div class="worker-stats">
+          <div class="ws-item"><div class="ws-val">5</div><div class="ws-key">Yrs Exp</div></div>
+          <div class="ws-item"><div class="ws-val">31</div><div class="ws-key">Jobs Done</div></div>
+          <div class="ws-item"><div class="ws-val">₹850</div><div class="ws-key">Per Day</div></div>
+        </div>
+        <div class="badge-row" style="justify-content:center;margin-bottom:16px">
+          <span class="badge badge-green" data-i18n="avail-now">Available Now</span>
+          <span class="badge badge-blue">PCMC</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="openModal('contractor')" data-i18n="contact">Contact</button>
+      </div>
+
+      <div class="worker-card">
+        <div class="worker-avatar">🪠</div>
+        <div class="worker-name">Sunil Kaware</div>
+        <div class="worker-skill">🚿 Plumber</div>
+        <div class="stars">★★★★★</div>
+        <div class="worker-stats">
+          <div class="ws-item"><div class="ws-val">10</div><div class="ws-key">Yrs Exp</div></div>
+          <div class="ws-item"><div class="ws-val">67</div><div class="ws-key">Jobs Done</div></div>
+          <div class="ws-item"><div class="ws-val">₹700</div><div class="ws-key">Per Day</div></div>
+        </div>
+        <div class="badge-row" style="justify-content:center;margin-bottom:16px">
+          <span class="badge badge-yellow">Available Feb 25</span>
+          <span class="badge badge-blue">Mumbai</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="openModal('contractor')" data-i18n="contact">Contact</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-inner">
+    <div class="section-label" data-i18n="testi-label">Testimonials</div>
+    <div class="section-title" data-i18n="testi-title">Trusted Across Maharashtra</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-text" data-i18n="t1">KaamSetu helped me find 12 verified helpers for my Baner site within 2 days. No middleman drama, straight contact. Saved me 3 weeks of headache.</div>
+        <div class="testi-person">
+          <div class="testi-avatar">👨‍💼</div>
+          <div>
+            <div class="testi-name">Vikram Jadhav</div>
+            <div class="testi-loc">Contractor • Pune</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-text" data-i18n="t2">Pehle kaam ke liye hazaro log poochna padta tha. Aab ek app se job milti hai. 5 mahine mein 8 jobs kiye KaamSetu se!</div>
+        <div class="testi-person">
+          <div class="testi-avatar">👷</div>
+          <div>
+            <div class="testi-name">Ramesh Bhosale</div>
+            <div class="testi-loc">Electrician • Nashik</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-text" data-i18n="t3">Our factory needed 8 welders on short notice. KaamSetu's search filters found exactly the right profiles with experience in heavy fabrication. Excellent platform.</div>
+        <div class="testi-person">
+          <div class="testi-avatar">🏭</div>
+          <div>
+            <div class="testi-name">Priya Mehta</div>
+            <div class="testi-loc">HR Manager • Indus Industries, PCMC</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing-bg">
+  <div class="section-inner">
+    <div class="section-label" style="text-align:center" data-i18n="pricing-label">Pricing</div>
+    <div class="section-title" style="text-align:center" data-i18n="pricing-title">Simple, Affordable Plans</div>
+    <div class="section-sub" style="text-align:center;margin:0 auto 0" data-i18n="pricing-sub">For contractors ready to scale their hiring.</div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="plan-name" data-i18n="plan-free">Free</div>
+        <div class="plan-price">₹0 <sub>/month</sub></div>
+        <div class="plan-desc" data-i18n="free-desc">Get started, find your first workers.</div>
+        <ul class="plan-features">
+          <li>3 job posts per month</li>
+          <li>View worker profiles</li>
+          <li>Basic search filters</li>
+          <li class="off">Priority listing</li>
+          <li class="off">Unlimited contacts</li>
+          <li class="off">Featured badge</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%" onclick="openModal('contractor')" data-i18n="get-started">Get Started</button>
+      </div>
+
+      <div class="price-card popular">
+        <div class="popular-tag" data-i18n="most-popular">Most Popular</div>
+        <div class="plan-name" data-i18n="plan-pro">Pro</div>
+        <div class="plan-price"><sup>₹</sup>1,499 <sub>/month</sub></div>
+        <div class="plan-desc" data-i18n="pro-desc">For active contractors running multiple sites.</div>
+        <ul class="plan-features">
+          <li>Unlimited job posts</li>
+          <li>Unlimited worker contacts</li>
+          <li>Priority listing in search</li>
+          <li>Featured contractor badge</li>
+          <li>Advanced filters & analytics</li>
+          <li class="off">Dedicated support</li>
+        </ul>
+        <button class="btn btn-primary" style="width:100%" onclick="openModal('contractor')" data-i18n="start-trial">Start Pro Trial</button>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name" data-i18n="plan-ent">Enterprise</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-desc" data-i18n="ent-desc">For large companies with ongoing labour needs.</div>
+        <ul class="plan-features">
+          <li>Everything in Pro</li>
+          <li>Dedicated account manager</li>
+          <li>Multi-city coverage</li>
+          <li>Bulk hiring tools</li>
+          <li>Attendance tracking (coming)</li>
+          <li>Digital wage payments (coming)</li>
+        </ul>
+        <button class="btn btn-outline" style="width:100%" data-i18n="contact-sales">Contact Sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 data-i18n="cta-title">Ready to Get Started?</h2>
+    <p data-i18n="cta-sub">Join 18,000+ workers and 3,400+ contractors already using KaamSetu across Maharashtra.</p>
+    <div class="cta-cards">
+      <div class="cta-card">
+        <div class="cta-card-icon">👷</div>
+        <h3 data-i18n="cta-w-h">Register as Worker</h3>
+        <p data-i18n="cta-w-p">Create your profile, showcase your skills, and get hired by top contractors in your city.</p>
+        <button class="btn btn-primary" onclick="openModal('worker')" data-i18n="cta-w-btn">Join as Worker →</button>
+      </div>
+      <div class="cta-card">
+        <div class="cta-card-icon">🏗</div>
+        <h3 data-i18n="cta-c-h">Register as Contractor</h3>
+        <p data-i18n="cta-c-p">Post your labour requirements and connect with verified, skilled workers within hours.</p>
+        <button class="btn btn-primary" onclick="openModal('contractor')" data-i18n="cta-c-btn">Post a Job →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom:12px;display:inline-flex">
+        <div class="logo-icon">🏗</div>
+        Kaam<span>Setu</span>
+      </a>
+      <p>India's trusted labour contractor marketplace. Connecting workers and contractors across Maharashtra.</p>
+      <div class="lang-toggle" style="margin-top:16px">
+        <button class="lang-btn active">EN</button>
+        <button class="lang-btn">हिंदी</button>
+        <button class="lang-btn">मराठी</button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer-for-workers">For Workers</h4>
+      <ul>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Browse Jobs</a></li>
+        <li><a href="#">My Profile</a></li>
+        <li><a href="#">How to Apply</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer-for-contractors">For Contractors</h4>
+      <ul>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Post a Job</a></li>
+        <li><a href="#">Find Workers</a></li>
+        <li><a href="#">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer-company">Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div data-i18n="footer-copy">© 2024 KaamSetu. All rights reserved.</div>
+    <div data-i18n="footer-made">🇮🇳 Made for India | Available in Maharashtra</div>
+  </div>
+</footer>
+
+<!-- MODAL: Login -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="modal-login-title">Login to KaamSetu</div>
+      <button class="modal-close" onclick="closeModal('login')">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="modal-login-mobile">Mobile Number</label>
+      <input class="form-input" type="tel" placeholder="+91 98765 43210">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="modal-login-otp">Enter OTP</label>
+      <div style="display:flex;gap:10px">
+        <input class="form-input" type="text" data-i18n-ph="modal-login-otp-ph" placeholder="6-digit OTP" style="flex:1">
+        <button class="btn btn-outline" style="white-space:nowrap" data-i18n="modal-login-send">Send OTP</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;font-size:0.95rem;justify-content:center" data-i18n="modal-login-btn">Login →</button>
+    <div style="text-align:center;margin-top:16px;font-size:0.85rem;color:var(--muted)">
+      <span data-i18n="modal-login-new">New user?</span> <a href="#" style="color:var(--orange)" onclick="closeModal('login');openModal('register')" data-i18n="modal-login-reg">Register here</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Register -->
+<div class="modal-overlay" id="modal-register">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="modal-reg-title">Create Account</div>
+      <button class="modal-close" onclick="closeModal('register')">✕</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:24px">
+      <button class="tab-btn active" id="reg-worker-btn" onclick="switchRegTab('worker')" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px" data-i18n="modal-reg-worker">👷 I'm a Worker</button>
+      <button class="tab-btn" id="reg-contractor-btn" onclick="switchRegTab('contractor')" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:6px" data-i18n="modal-reg-cont">🏗 I'm a Contractor</button>
+    </div>
+    <div id="reg-worker-form">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" placeholder="Rajan Patil"></div>
+        <div class="form-group"><label class="form-label">Mobile</label><input class="form-input" placeholder="+91 98765..."></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">City</label><input class="form-input" placeholder="Pune"></div>
+        <div class="form-group"><label class="form-label">State</label><input class="form-input" placeholder="Maharashtra"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Primary Skill</label>
+          <select class="form-input"><option>Electrician</option><option>Plumber</option><option>Welder</option><option>Fitter</option><option>Helper/Unskilled</option><option>Mason</option><option>Carpenter</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Experience (Years)</label><input class="form-input" type="number" placeholder="5"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Expected Daily Wage (₹)</label><input class="form-input" type="number" placeholder="700"></div>
+    </div>
+    <div id="reg-contractor-form" style="display:none">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Company Name</label><input class="form-input" placeholder="Raj Constructions"></div>
+        <div class="form-group"><label class="form-label">Contact Person</label><input class="form-input" placeholder="Rajesh Sharma"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Mobile</label><input class="form-input" placeholder="+91 98765..."></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" placeholder="info@company.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">City</label><input class="form-input" placeholder="Pune"></div>
+        <div class="form-group"><label class="form-label">Work Type</label>
+          <select class="form-input"><option>Construction</option><option>Factory</option><option>Event</option><option>Others</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">GST Number (Optional)</label><input class="form-input" placeholder="22AAAAA0000A1Z5"></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;font-size:0.95rem;justify-content:center;margin-top:8px">Register & Get OTP →</button>
+  </div>
+</div>
+
+<!-- MODAL: Worker Quick -->
+<div class="modal-overlay" id="modal-worker">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="modal-worker-title">👷 Join as Worker</div>
+      <button class="modal-close" onclick="closeModal('worker')">✕</button>
+    </div>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:24px" data-i18n="modal-worker-p">Create your free profile and start getting hired by top contractors in your area.</p>
+    <div class="form-group"><label class="form-label" data-i18n="modal-worker-mobile">Mobile Number</label><input class="form-input" placeholder="+91 98765 43210"></div>
+    <div class="form-group"><label class="form-label" data-i18n="modal-worker-city">Your City</label><input class="form-input" placeholder="Pune, Nashik, Mumbai..."></div>
+    <div class="form-group"><label class="form-label" data-i18n="modal-worker-skill">Your Main Skill</label>
+      <select class="form-input"><option>Electrician</option><option>Plumber</option><option>Welder</option><option>Fitter</option><option>Mason</option><option>Carpenter</option><option>Helper/Daily Wage</option></select>
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;justify-content:center" onclick="showSuccess('worker')" data-i18n="modal-worker-btn">Register Free →</button>
+  </div>
+</div>
+
+<!-- MODAL: Contractor Quick -->
+<div class="modal-overlay" id="modal-contractor">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="modal-cont-title">🏗 Post a Job</div>
+      <button class="modal-close" onclick="closeModal('contractor')">✕</button>
+    </div>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:24px" data-i18n="modal-cont-p">Tell us what you need and we'll match you with verified workers immediately.</p>
+    <div class="form-group"><label class="form-label" data-i18n="modal-cont-jobtitle">Job Title</label><input class="form-input" data-i18n-ph="modal-cont-jobtitle-ph" placeholder="e.g. Need 10 Civil Helpers"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-i18n="modal-cont-workers">Workers Needed</label><input class="form-input" type="number" placeholder="10"></div>
+      <div class="form-group"><label class="form-label" data-i18n="modal-cont-wage">Daily Wage (₹)</label><input class="form-input" type="number" placeholder="500"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label" data-i18n="modal-cont-loc">Location</label><input class="form-input" placeholder="Pune"></div>
+      <div class="form-group"><label class="form-label" data-i18n="modal-cont-dur">Duration</label><input class="form-input" data-i18n-ph="modal-cont-dur-ph" placeholder="30 days"></div>
+    </div>
+    <div class="form-group"><label class="form-label" data-i18n="modal-cont-mobile">Your Mobile</label><input class="form-input" placeholder="+91 98765 43210"></div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;justify-content:center" onclick="showSuccess('contractor')" data-i18n="modal-cont-btn">Post Job Free →</button>
+  </div>
+</div>
+
+<script>
+  function openModal(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  function switchTab(btn, targetId) {
+    btn.closest('.how-grid').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const all = ['worker-steps', 'contractor-steps'];
+    all.forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = id === targetId ? 'flex' : 'none';
+    });
+  }
+
+  function switchRegTab(type) {
+    if (type === 'worker') {
+      document.getElementById('reg-worker-form').style.display = 'block';
+      document.getElementById('reg-contractor-form').style.display = 'none';
+      document.getElementById('reg-worker-btn').classList.add('active');
+      document.getElementById('reg-contractor-btn').classList.remove('active');
+    } else {
+      document.getElementById('reg-contractor-form').style.display = 'block';
+      document.getElementById('reg-worker-form').style.display = 'none';
+      document.getElementById('reg-contractor-btn').classList.add('active');
+      document.getElementById('reg-worker-btn').classList.remove('active');
+    }
+  }
+
+  function showSuccess(type) {
+    closeModal(type);
+    const msg = type === 'worker'
+      ? '🎉 Profile registered! You will receive an OTP shortly.'
+      : '✅ Job posted! We will match workers in your area within 2 hours.';
+    const toast = document.createElement('div');
+    toast.style.cssText = `position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#161B22;border:1px solid #3FB950;color:#3FB950;padding:14px 28px;border-radius:8px;font-size:0.9rem;font-weight:600;z-index:9999;animation:fadeUp 0.3s ease`;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  // ── FULL TRANSLATION SYSTEM ──────────────────────────────────────────────
+  const translations = {
+    en: {
+      // NAV
+      'nav-how':        'How it works',
+      'nav-jobs':       'Jobs',
+      'nav-workers':    'Workers',
+      'nav-pricing':    'Pricing',
+      'nav-login':      'Login',
+      'nav-post':       'Post a Job',
+      // HERO
+      'hero-badge':     '2,400+ workers available today',
+      'hero-h1':        'Connect with Skilled <em>Labour</em> in 24 Hours',
+      'hero-p':         "KaamSetu is India's trusted platform connecting contractors with skilled & unskilled labour for construction, factories, events, and more. Fast. Verified. Reliable.",
+      'hero-btn-worker':'🔨 I\'m a Worker',
+      'hero-btn-cont':  '🏗 I\'m a Contractor',
+      'stat-workers':   'Registered Workers',
+      'stat-contractors':'Contractors',
+      'stat-jobs':      'Jobs Filled',
+      // SEARCH
+      'search-placeholder': 'Search by skill (e.g. Electrician, Welder, Helper)...',
+      'search-btn':     '🔍 Search',
+      'loc-all':        'All Locations',
+      'cat-all':        'All Categories',
+      'cat-const':      'Construction',
+      'cat-factory':    'Factory',
+      'cat-event':      'Event',
+      'cat-elec':       'Electrical',
+      // HOW IT WORKS
+      'how-label':      'How It Works',
+      'how-title':      'Simple. Fast. Trusted.',
+      'how-sub':        "Whether you're looking for work or need workers — KaamSetu gets you connected in hours, not days.",
+      'tab-worker':     '👷 For Workers',
+      'tab-contractor': '🏗 For Contractors',
+      'ws1-h': 'Register & Build Profile',
+      'ws1-p': 'Sign up with your mobile number. Add your skills, experience, location, and expected daily wage. Takes just 5 minutes.',
+      'ws2-h': 'Browse Nearby Jobs',
+      'ws2-p': 'See job postings from contractors in your city. Filter by skill, wage, and duration to find the right fit.',
+      'ws3-h': 'Apply & Get Hired',
+      'ws3-p': 'Apply with one tap. Chat with the contractor directly. Get hired and earn daily wages.',
+      'ws4-h': 'Rate & Build Reputation',
+      'ws4-p': 'After every job, rate the contractor and receive a rating. A good profile gets more jobs.',
+      'cs1-h': 'Register Your Company',
+      'cs1-p': 'Create a contractor profile with your company name, work type, and location. OTP-verified instantly.',
+      'cs2-h': 'Post Labour Requirements',
+      'cs2-p': 'Describe how many workers you need, the skill required, duration, location, and daily wage offered.',
+      'cs3-h': 'Get Matched Instantly',
+      'cs3-p': 'Our system shows verified, nearby workers matching your requirements. Shortlist the best profiles.',
+      'cs4-h': 'Connect & Start Work',
+      'cs4-p': 'Chat or call shortlisted workers directly. Finalize and start your project on time.',
+      'match-title': 'AI-Powered Matching',
+      'match-p':     "Our system automatically matches your job post with the best-fit workers in your area based on skill, experience, and availability.",
+      // FEATURES
+      'feat-label': 'Platform Features',
+      'feat-title': 'Everything You Need to Hire Fast',
+      'f1-h':'Location-Based Matching','f1-p':'Automatically connects workers and contractors within the same city or nearby area for faster mobilisation.',
+      'f2-h':'OTP Verified Profiles','f2-p':'Every worker and contractor is verified via mobile OTP. Aadhaar upload available for extra trust.',
+      'f3-h':'In-App Chat','f3-p':'Message directly within the platform. Share phone numbers only after confirming the job for privacy.',
+      'f4-h':'Two-Way Rating System','f4-p':'Workers rate contractors and contractors rate workers. Build a trusted reputation over time.',
+      'f5-h':'SMS Notifications','f5-p':'Get SMS alerts when a job is posted nearby, when someone applies, or when a message arrives.',
+      'f6-h':'Hindi + English','f6-p':'Full bilingual support. Workers and contractors can use the platform in their preferred language.',
+      // JOBS
+      'jobs-label': 'Live Job Posts',
+      'jobs-title': 'Latest Opportunities',
+      'post-job':   '+ Post a Job',
+      'apply-now':  'Apply Now',
+      'urgent':     'Urgent',
+      'open':       'Open',
+      'closing':    'Closing Soon',
+      // WORKERS
+      'workers-label': 'Worker Profiles',
+      'workers-title': 'Verified & Ready to Work',
+      'join-worker':   'Join as Worker',
+      'contact':       'Contact',
+      'avail-now':     'Available Now',
+      // TESTIMONIALS
+      'testi-label': 'Testimonials',
+      'testi-title': 'Trusted Across Maharashtra',
+      't1': 'KaamSetu helped me find 12 verified helpers for my Baner site within 2 days. No middleman drama, straight contact. Saved me 3 weeks of headache.',
+      't2': 'Pehle kaam ke liye hazaro log poochna padta tha. Aab ek app se job milti hai. 5 mahine mein 8 jobs kiye KaamSetu se!',
+      't3': 'Our factory needed 8 welders on short notice. KaamSetu\'s search filters found exactly the right profiles with experience in heavy fabrication. Excellent platform.',
+      // PRICING
+      'pricing-label': 'Pricing',
+      'pricing-title': 'Simple, Affordable Plans',
+      'pricing-sub':   'For contractors ready to scale their hiring.',
+      'plan-free':     'Free', 'free-desc': 'Get started, find your first workers.',
+      'plan-pro':      'Pro',  'pro-desc':  'For active contractors running multiple sites.',
+      'plan-ent':      'Enterprise', 'ent-desc': 'For large companies with ongoing labour needs.',
+      'get-started':   'Get Started',
+      'start-trial':   'Start Pro Trial',
+      'contact-sales': 'Contact Sales',
+      'most-popular':  'Most Popular',
+      // CTA
+      'cta-title': 'Ready to Get Started?',
+      'cta-sub':   'Join 18,000+ workers and 3,400+ contractors already using KaamSetu across Maharashtra.',
+      'cta-w-h':   'Register as Worker',
+      'cta-w-p':   'Create your profile, showcase your skills, and get hired by top contractors in your city.',
+      'cta-w-btn': 'Join as Worker →',
+      'cta-c-h':   'Register as Contractor',
+      'cta-c-p':   'Post your labour requirements and connect with verified, skilled workers within hours.',
+      'cta-c-btn': 'Post a Job →',
+      // FOOTER
+      'footer-copy': '© 2024 KaamSetu. All rights reserved.',
+      'footer-made': '🇮🇳 Made for India | Available in Maharashtra',
+      'footer-for-workers': 'For Workers',
+      'footer-for-contractors': 'For Contractors',
+      'footer-company': 'Company',
+      // MODALS
+      'modal-login-title': 'Login to KaamSetu',
+      'modal-login-mobile': 'Mobile Number',
+      'modal-login-otp': 'Enter OTP',
+      'modal-login-otp-ph': '6-digit OTP',
+      'modal-login-send': 'Send OTP',
+      'modal-login-btn': 'Login →',
+      'modal-login-new': 'New user?',
+      'modal-login-reg': 'Register here',
+      'modal-reg-title': 'Create Account',
+      'modal-reg-worker': "👷 I'm a Worker",
+      'modal-reg-cont':   "🏗 I'm a Contractor",
+      'modal-worker-title': '👷 Join as Worker',
+      'modal-worker-p': 'Create your free profile and start getting hired by top contractors in your area.',
+      'modal-worker-mobile': 'Mobile Number',
+      'modal-worker-city': 'Your City',
+      'modal-worker-skill': 'Your Main Skill',
+      'modal-worker-btn': 'Register Free →',
+      'modal-cont-title': '🏗 Post a Job',
+      'modal-cont-p': "Tell us what you need and we'll match you with verified workers immediately.",
+      'modal-cont-jobtitle': 'Job Title',
+      'modal-cont-jobtitle-ph': 'e.g. Need 10 Civil Helpers',
+      'modal-cont-workers': 'Workers Needed',
+      'modal-cont-wage': 'Daily Wage (₹)',
+      'modal-cont-loc': 'Location',
+      'modal-cont-dur': 'Duration',
+      'modal-cont-dur-ph': '30 days',
+      'modal-cont-mobile': 'Your Mobile',
+      'modal-cont-btn': 'Post Job Free →',
+      'success-worker': '🎉 Profile registered! You will receive an OTP shortly.',
+      'success-cont':   '✅ Job posted! We will match workers in your area within 2 hours.',
+    },
+
+    hi: {
+      'nav-how':       'यह कैसे काम करता है',
+      'nav-jobs':      'नौकरियां',
+      'nav-workers':   'कर्मचारी',
+      'nav-pricing':   'मूल्य',
+      'nav-login':     'लॉगिन',
+      'nav-post':      'नौकरी पोस्ट करें',
+      'hero-badge':    'आज 2,400+ कर्मचारी उपलब्ध',
+      'hero-h1':       '24 घंटे में <em>कुशल मजदूर</em> से जुड़ें',
+      'hero-p':        'KaamSetu भारत का विश्वसनीय प्लेटफॉर्म है जो ठेकेदारों को निर्माण, कारखाने, इवेंट आदि के लिए कुशल व अकुशल मजदूरों से जोड़ता है। तेज़। सत्यापित। भरोसेमंद।',
+      'hero-btn-worker':'🔨 मैं एक कर्मचारी हूँ',
+      'hero-btn-cont': '🏗 मैं एक ठेकेदार हूँ',
+      'stat-workers':  'पंजीकृत कर्मचारी',
+      'stat-contractors':'ठेकेदार',
+      'stat-jobs':     'नौकरियां भरी गईं',
+      'search-placeholder': 'कौशल से खोजें (जैसे इलेक्ट्रीशियन, वेल्डर, हेल्पर)...',
+      'search-btn':    '🔍 खोजें',
+      'loc-all':       'सभी स्थान',
+      'cat-all':       'सभी श्रेणियां',
+      'cat-const':     'निर्माण',
+      'cat-factory':   'कारखाना',
+      'cat-event':     'इवेंट',
+      'cat-elec':      'इलेक्ट्रिकल',
+      'how-label':     'यह कैसे काम करता है',
+      'how-title':     'सरल। तेज़। विश्वसनीय।',
+      'how-sub':       'चाहे आप काम ढूंढ रहे हों या कर्मचारी चाहिए हों — KaamSetu आपको घंटों में जोड़ता है।',
+      'tab-worker':    '👷 कर्मचारियों के लिए',
+      'tab-contractor':'🏗 ठेकेदारों के लिए',
+      'ws1-h': 'पंजीकरण करें और प्रोफ़ाइल बनाएं',
+      'ws1-p': 'अपने मोबाइल नंबर से साइन अप करें। अपना कौशल, अनुभव, स्थान और अपेक्षित दैनिक मजदूरी जोड़ें। केवल 5 मिनट लगते हैं।',
+      'ws2-h': 'पास की नौकरियां देखें',
+      'ws2-p': 'अपने शहर के ठेकेदारों की नौकरी पोस्टिंग देखें। सही नौकरी खोजने के लिए कौशल, मजदूरी और अवधि से फ़िल्टर करें।',
+      'ws3-h': 'आवेदन करें और नौकरी पाएं',
+      'ws3-p': 'एक टैप से आवेदन करें। सीधे ठेकेदार से चैट करें। काम पाएं और दैनिक मजदूरी कमाएं।',
+      'ws4-h': 'रेटिंग दें और प्रतिष्ठा बनाएं',
+      'ws4-p': 'हर काम के बाद ठेकेदार को रेट करें और रेटिंग पाएं। अच्छी प्रोफ़ाइल से ज़्यादा नौकरियां मिलती हैं।',
+      'cs1-h': 'अपनी कंपनी पंजीकृत करें',
+      'cs1-p': 'अपनी कंपनी के नाम, काम के प्रकार और स्थान के साथ ठेकेदार प्रोफ़ाइल बनाएं। OTP से तुरंत सत्यापित।',
+      'cs2-h': 'श्रम आवश्यकताएं पोस्ट करें',
+      'cs2-p': 'बताएं कि आपको कितने कर्मचारी चाहिए, किस कौशल की ज़रूरत है, अवधि, स्थान और दैनिक मजदूरी।',
+      'cs3-h': 'तुरंत मिलान पाएं',
+      'cs3-p': 'हमारी प्रणाली आपकी आवश्यकताओं के अनुसार सत्यापित, नज़दीकी कर्मचारियों को दिखाती है। सर्वश्रेष्ठ प्रोफ़ाइल को शॉर्टलिस्ट करें।',
+      'cs4-h': 'जुड़ें और काम शुरू करें',
+      'cs4-p': 'शॉर्टलिस्ट किए गए कर्मचारियों से सीधे चैट या कॉल करें। काम समय पर शुरू करें।',
+      'match-title': 'AI-आधारित मिलान',
+      'match-p':     'हमारी प्रणाली आपकी जॉब पोस्ट को कौशल, अनुभव और उपलब्धता के आधार पर आपके क्षेत्र के सबसे उपयुक्त कर्मचारियों से स्वचालित रूप से मिलाती है।',
+      'feat-label':  'प्लेटफॉर्म सुविधाएं',
+      'feat-title':  'तेज़ी से भर्ती के लिए सब कुछ',
+      'f1-h':'स्थान-आधारित मिलान','f1-p':'तेज़ी से जुड़ने के लिए एक ही शहर या पास के क्षेत्र के कर्मचारियों और ठेकेदारों को स्वचालित रूप से जोड़ता है।',
+      'f2-h':'OTP सत्यापित प्रोफ़ाइल','f2-p':'हर कर्मचारी और ठेकेदार को मोबाइल OTP से सत्यापित किया जाता है। अतिरिक्त विश्वास के लिए आधार अपलोड उपलब्ध।',
+      'f3-h':'इन-ऐप चैट','f3-p':'प्लेटफॉर्म के भीतर सीधे संदेश भेजें। गोपनीयता के लिए नौकरी की पुष्टि के बाद ही फ़ोन नंबर साझा करें।',
+      'f4-h':'दोतरफा रेटिंग प्रणाली','f4-p':'कर्मचारी ठेकेदारों को और ठेकेदार कर्मचारियों को रेट करते हैं। समय के साथ विश्वसनीय प्रतिष्ठा बनाएं।',
+      'f5-h':'SMS सूचनाएं','f5-p':'जब पास में नौकरी पोस्ट हो, कोई आवेदन करे, या संदेश आए तो SMS अलर्ट पाएं।',
+      'f6-h':'हिंदी + अंग्रेज़ी','f6-p':'पूर्ण द्विभाषी समर्थन। कर्मचारी और ठेकेदार अपनी पसंदीदा भाषा में प्लेटफॉर्म का उपयोग कर सकते हैं।',
+      'jobs-label':  'लाइव नौकरी पोस्ट',
+      'jobs-title':  'नवीनतम अवसर',
+      'post-job':    '+ नौकरी पोस्ट करें',
+      'apply-now':   'अभी आवेदन करें',
+      'urgent':      'अत्यावश्यक',
+      'open':        'खुला',
+      'closing':     'जल्द बंद होगा',
+      'workers-label': 'कर्मचारी प्रोफ़ाइल',
+      'workers-title': 'सत्यापित और काम के लिए तैयार',
+      'join-worker': 'कर्मचारी के रूप में जुड़ें',
+      'contact':     'संपर्क करें',
+      'avail-now':   'अभी उपलब्ध',
+      'testi-label': 'प्रशंसापत्र',
+      'testi-title': 'पूरे महाराष्ट्र में विश्वसनीय',
+      't1': 'KaamSetu ने 2 दिनों में मेरी बानेर साइट के लिए 12 सत्यापित हेल्पर खोजने में मदद की। कोई बिचौलिया नहीं, सीधा संपर्क। 3 हफ्तों की परेशानी बच गई।',
+      't2': 'पहले काम के लिए हजारों लोगों से पूछना पड़ता था। अब एक ऐप से नौकरी मिलती है। 5 महीने में 8 नौकरियां कीं KaamSetu से!',
+      't3': 'हमारी फ़ैक्टरी को कम समय में 8 वेल्डर की ज़रूरत थी। KaamSetu के सर्च फ़िल्टर ने हेवी फैब्रिकेशन में अनुभव वाले बिल्कुल सही प्रोफ़ाइल खोजे। बेहतरीन प्लेटफॉर्म।',
+      'pricing-label': 'मूल्य निर्धारण',
+      'pricing-title': 'सरल, किफ़ायती प्लान',
+      'pricing-sub':   'उन ठेकेदारों के लिए जो अपनी भर्ती बढ़ाने के लिए तैयार हैं।',
+      'plan-free': 'मुफ़्त', 'free-desc': 'शुरुआत करें, पहले कर्मचारी खोजें।',
+      'plan-pro':  'प्रो',   'pro-desc':  'कई साइटों पर काम करने वाले सक्रिय ठेकेदारों के लिए।',
+      'plan-ent':  'एंटरप्राइज़', 'ent-desc': 'निरंतर श्रम आवश्यकताओं वाली बड़ी कंपनियों के लिए।',
+      'get-started':  'शुरू करें',
+      'start-trial':  'प्रो ट्रायल शुरू करें',
+      'contact-sales':'बिक्री से संपर्क करें',
+      'most-popular': 'सबसे लोकप्रिय',
+      'cta-title': 'शुरू करने के लिए तैयार हैं?',
+      'cta-sub':   'महाराष्ट्र भर में पहले से KaamSetu का उपयोग कर रहे 18,000+ कर्मचारियों और 3,400+ ठेकेदारों से जुड़ें।',
+      'cta-w-h':   'कर्मचारी के रूप में पंजीकरण करें',
+      'cta-w-p':   'अपनी प्रोफ़ाइल बनाएं, अपना कौशल दिखाएं और अपने शहर के शीर्ष ठेकेदारों द्वारा नियुक्त हों।',
+      'cta-w-btn': 'कर्मचारी के रूप में जुड़ें →',
+      'cta-c-h':   'ठेकेदार के रूप में पंजीकरण करें',
+      'cta-c-p':   'अपनी श्रम आवश्यकताएं पोस्ट करें और घंटों के भीतर सत्यापित, कुशल कर्मचारियों से जुड़ें।',
+      'cta-c-btn': 'नौकरी पोस्ट करें →',
+      'footer-copy': '© 2024 KaamSetu. सर्वाधिकार सुरक्षित।',
+      'footer-made': '🇮🇳 भारत के लिए बनाया | महाराष्ट्र में उपलब्ध',
+      'footer-for-workers': 'कर्मचारियों के लिए',
+      'footer-for-contractors': 'ठेकेदारों के लिए',
+      'footer-company': 'कंपनी',
+      'modal-login-title': 'KaamSetu में लॉगिन करें',
+      'modal-login-mobile': 'मोबाइल नंबर',
+      'modal-login-otp': 'OTP दर्ज करें',
+      'modal-login-otp-ph': '6-अंकीय OTP',
+      'modal-login-send': 'OTP भेजें',
+      'modal-login-btn': 'लॉगिन करें →',
+      'modal-login-new': 'नया उपयोगकर्ता?',
+      'modal-login-reg': 'यहाँ पंजीकरण करें',
+      'modal-reg-title': 'खाता बनाएं',
+      'modal-reg-worker': '👷 मैं एक कर्मचारी हूँ',
+      'modal-reg-cont':   '🏗 मैं एक ठेकेदार हूँ',
+      'modal-worker-title': '👷 कर्मचारी के रूप में जुड़ें',
+      'modal-worker-p': 'अपनी मुफ़्त प्रोफ़ाइल बनाएं और अपने क्षेत्र के शीर्ष ठेकेदारों द्वारा नियुक्त होना शुरू करें।',
+      'modal-worker-mobile': 'मोबाइल नंबर',
+      'modal-worker-city': 'आपका शहर',
+      'modal-worker-skill': 'आपका मुख्य कौशल',
+      'modal-worker-btn': 'मुफ़्त पंजीकरण करें →',
+      'modal-cont-title': '🏗 नौकरी पोस्ट करें',
+      'modal-cont-p': 'हमें बताएं कि आपको क्या चाहिए और हम तुरंत सत्यापित कर्मचारियों से आपका मिलान करेंगे।',
+      'modal-cont-jobtitle': 'नौकरी का शीर्षक',
+      'modal-cont-jobtitle-ph': 'जैसे 10 सिविल हेल्पर चाहिए',
+      'modal-cont-workers': 'कर्मचारियों की संख्या',
+      'modal-cont-wage': 'दैनिक मजदूरी (₹)',
+      'modal-cont-loc': 'स्थान',
+      'modal-cont-dur': 'अवधि',
+      'modal-cont-dur-ph': '30 दिन',
+      'modal-cont-mobile': 'आपका मोबाइल',
+      'modal-cont-btn': 'मुफ़्त नौकरी पोस्ट करें →',
+      'success-worker': '🎉 प्रोफ़ाइल पंजीकृत! आपको जल्द ही OTP मिलेगा।',
+      'success-cont':   '✅ नौकरी पोस्ट हो गई! हम 2 घंटे के भीतर आपके क्षेत्र के कर्मचारियों से मिलान करेंगे।',
+    },
+
+    mr: {
+      'nav-how':       'हे कसे काम करते',
+      'nav-jobs':      'नोकऱ्या',
+      'nav-workers':   'कामगार',
+      'nav-pricing':   'किंमत',
+      'nav-login':     'लॉगिन',
+      'nav-post':      'नोकरी पोस्ट करा',
+      'hero-badge':    'आज 2,400+ कामगार उपलब्ध',
+      'hero-h1':       '24 तासांत <em>कुशल कामगारांशी</em> जोडा',
+      'hero-p':        'KaamSetu हे भारताचे विश्वासू व्यासपीठ आहे जे कंत्राटदारांना बांधकाम, कारखाने, इव्हेंट इत्यादींसाठी कुशल व अकुशल कामगारांशी जोडते. जलद. सत्यापित. विश्वासार्ह.',
+      'hero-btn-worker':'🔨 मी एक कामगार आहे',
+      'hero-btn-cont': '🏗 मी एक कंत्राटदार आहे',
+      'stat-workers':  'नोंदणीकृत कामगार',
+      'stat-contractors':'कंत्राटदार',
+      'stat-jobs':     'नोकऱ्या भरल्या',
+      'search-placeholder': 'कौशल्याने शोधा (उदा. इलेक्ट्रिशियन, वेल्डर, हेल्पर)...',
+      'search-btn':    '🔍 शोधा',
+      'loc-all':       'सर्व स्थाने',
+      'cat-all':       'सर्व श्रेणी',
+      'cat-const':     'बांधकाम',
+      'cat-factory':   'कारखाना',
+      'cat-event':     'इव्हेंट',
+      'cat-elec':      'इलेक्ट्रिकल',
+      'how-label':     'हे कसे काम करते',
+      'how-title':     'सोपे. जलद. विश्वासू.',
+      'how-sub':       'तुम्हाला काम हवे असो वा कामगार — KaamSetu तुम्हाला काही तासांत जोडते.',
+      'tab-worker':    '👷 कामगारांसाठी',
+      'tab-contractor':'🏗 कंत्राटदारांसाठी',
+      'ws1-h': 'नोंदणी करा आणि प्रोफाइल तयार करा',
+      'ws1-p': 'तुमच्या मोबाइल नंबरने साइन अप करा. तुमचे कौशल्य, अनुभव, स्थान आणि अपेक्षित दैनिक मजुरी जोडा. फक्त 5 मिनिटे लागतात.',
+      'ws2-h': 'जवळच्या नोकऱ्या पहा',
+      'ws2-p': 'तुमच्या शहरातील कंत्राटदारांच्या नोकरी पोस्टिंग पहा. योग्य नोकरी शोधण्यासाठी कौशल्य, मजुरी आणि कालावधीनुसार फिल्टर करा.',
+      'ws3-h': 'अर्ज करा आणि नोकरी मिळवा',
+      'ws3-p': 'एका टॅपने अर्ज करा. थेट कंत्राटदाराशी चॅट करा. नोकरी मिळवा आणि दैनिक मजुरी कमवा.',
+      'ws4-h': 'रेटिंग द्या आणि प्रतिष्ठा बनवा',
+      'ws4-p': 'प्रत्येक कामानंतर कंत्राटदाराला रेट करा आणि रेटिंग मिळवा. चांगल्या प्रोफाइलमुळे अधिक नोकऱ्या मिळतात.',
+      'cs1-h': 'तुमची कंपनी नोंदवा',
+      'cs1-p': 'तुमच्या कंपनीचे नाव, कामाचा प्रकार आणि स्थानासह कंत्राटदार प्रोफाइल तयार करा. OTP द्वारे लगेच सत्यापित.',
+      'cs2-h': 'कामगारांची गरज पोस्ट करा',
+      'cs2-p': 'तुम्हाला किती कामगार हवे, कोणते कौशल्य आवश्यक, कालावधी, स्थान आणि दैनिक मजुरी सांगा.',
+      'cs3-h': 'त्वरित जुळणी मिळवा',
+      'cs3-p': 'आमची प्रणाली तुमच्या आवश्यकतांशी जुळणारे सत्यापित, जवळचे कामगार दाखवते. सर्वोत्तम प्रोफाइल शॉर्टलिस्ट करा.',
+      'cs4-h': 'जोडा आणि काम सुरू करा',
+      'cs4-p': 'शॉर्टलिस्ट केलेल्या कामगारांशी थेट चॅट किंवा कॉल करा. काम वेळेवर सुरू करा.',
+      'match-title': 'AI-आधारित जुळणी',
+      'match-p':     'आमची प्रणाली तुमची नोकरी पोस्ट कौशल्य, अनुभव आणि उपलब्धतेच्या आधारे तुमच्या क्षेत्रातील सर्वोत्तम कामगारांशी आपोआप जुळवते.',
+      'feat-label':  'प्लॅटफॉर्म वैशिष्ट्ये',
+      'feat-title':  'जलद भरतीसाठी सर्व काही',
+      'f1-h':'स्थान-आधारित जुळणी','f1-p':'जलद जोडण्यासाठी एकाच शहरातील किंवा जवळच्या भागातील कामगार आणि कंत्राटदारांना आपोआप जोडते.',
+      'f2-h':'OTP सत्यापित प्रोफाइल','f2-p':'प्रत्येक कामगार आणि कंत्राटदार मोबाइल OTP द्वारे सत्यापित केला जातो. अतिरिक्त विश्वासासाठी आधार अपलोड उपलब्ध.',
+      'f3-h':'इन-ऍप चॅट','f3-p':'प्लॅटफॉर्ममध्येच थेट संदेश पाठवा. गोपनीयतेसाठी नोकरी निश्चित झाल्यावरच फोन नंबर शेअर करा.',
+      'f4-h':'दुतर्फा रेटिंग प्रणाली','f4-p':'कामगार कंत्राटदारांना आणि कंत्राटदार कामगारांना रेट करतात. कालांतराने विश्वासार्ह प्रतिष्ठा बनवा.',
+      'f5-h':'SMS सूचना','f5-p':'जवळ नोकरी पोस्ट झाल्यावर, कोणी अर्ज केल्यावर किंवा संदेश आल्यावर SMS अलर्ट मिळवा.',
+      'f6-h':'हिंदी + इंग्रजी','f6-p':'संपूर्ण द्विभाषी समर्थन. कामगार आणि कंत्राटदार त्यांच्या पसंतीच्या भाषेत प्लॅटफॉर्म वापरू शकतात.',
+      'jobs-label':  'लाइव्ह नोकरी पोस्ट',
+      'jobs-title':  'नवीनतम संधी',
+      'post-job':    '+ नोकरी पोस्ट करा',
+      'apply-now':   'आत्ताच अर्ज करा',
+      'urgent':      'तातडीचे',
+      'open':        'खुले',
+      'closing':     'लवकरच बंद होईल',
+      'workers-label': 'कामगार प्रोफाइल',
+      'workers-title': 'सत्यापित आणि कामासाठी तयार',
+      'join-worker': 'कामगार म्हणून सामील व्हा',
+      'contact':     'संपर्क करा',
+      'avail-now':   'आत्ता उपलब्ध',
+      'testi-label': 'अभिप्राय',
+      'testi-title': 'संपूर्ण महाराष्ट्रात विश्वासू',
+      't1': 'KaamSetu ने 2 दिवसांत माझ्या बाणेर साइटसाठी 12 सत्यापित हेल्पर शोधण्यात मदत केली. दलालाचा त्रास नाही, थेट संपर्क. 3 आठवड्यांचा त्रास वाचला.',
+      't2': 'पहले कामासाठी हजारो लोकांना विचारावे लागायचे. आता एका ऍपने नोकरी मिळते. 5 महिन्यात 8 नोकऱ्या केल्या KaamSetu ने!',
+      't3': 'आमच्या कारखान्याला कमी वेळात 8 वेल्डर हवे होते. KaamSetu च्या सर्च फिल्टर्सने हेवी फॅब्रिकेशनचा अनुभव असलेले अगदी योग्य प्रोफाइल शोधले. उत्कृष्ट प्लॅटफॉर्म.',
+      'pricing-label': 'किंमत',
+      'pricing-title': 'सोपे, परवडणारे प्लॅन',
+      'pricing-sub':   'भरती वाढवण्यासाठी तयार असलेल्या कंत्राटदारांसाठी.',
+      'plan-free': 'मुफत', 'free-desc': 'सुरुवात करा, पहिले कामगार शोधा.',
+      'plan-pro':  'प्रो',  'pro-desc':  'अनेक साइटवर काम करणाऱ्या सक्रिय कंत्राटदारांसाठी.',
+      'plan-ent':  'एंटरप्राइझ', 'ent-desc': 'सतत कामगार गरज असलेल्या मोठ्या कंपन्यांसाठी.',
+      'get-started':  'सुरू करा',
+      'start-trial':  'प्रो ट्रायल सुरू करा',
+      'contact-sales':'विक्रीशी संपर्क करा',
+      'most-popular': 'सर्वाधिक लोकप्रिय',
+      'cta-title': 'सुरू करण्यासाठी तयार आहात?',
+      'cta-sub':   'महाराष्ट्रभर आधीच KaamSetu वापरणाऱ्या 18,000+ कामगार आणि 3,400+ कंत्राटदारांसोबत सामील व्हा.',
+      'cta-w-h':   'कामगार म्हणून नोंदणी करा',
+      'cta-w-p':   'तुमची प्रोफाइल तयार करा, तुमचे कौशल्य दाखवा आणि तुमच्या शहरातील शीर्ष कंत्राटदारांकडून नियुक्त व्हा.',
+      'cta-w-btn': 'कामगार म्हणून सामील व्हा →',
+      'cta-c-h':   'कंत्राटदार म्हणून नोंदणी करा',
+      'cta-c-p':   'तुमची कामगार गरज पोस्ट करा आणि काही तासांत सत्यापित, कुशल कामगारांशी जोडा.',
+      'cta-c-btn': 'नोकरी पोस्ट करा →',
+      'footer-copy': '© 2024 KaamSetu. सर्व हक्क राखीव.',
+      'footer-made': '🇮🇳 भारतासाठी बनवले | महाराष्ट्रात उपलब्ध',
+      'footer-for-workers': 'कामगारांसाठी',
+      'footer-for-contractors': 'कंत्राटदारांसाठी',
+      'footer-company': 'कंपनी',
+      'modal-login-title': 'KaamSetu मध्ये लॉगिन करा',
+      'modal-login-mobile': 'मोबाइल नंबर',
+      'modal-login-otp': 'OTP टाका',
+      'modal-login-otp-ph': '6-अंकी OTP',
+      'modal-login-send': 'OTP पाठवा',
+      'modal-login-btn': 'लॉगिन करा →',
+      'modal-login-new': 'नवीन वापरकर्ता?',
+      'modal-login-reg': 'येथे नोंदणी करा',
+      'modal-reg-title': 'खाते तयार करा',
+      'modal-reg-worker': '👷 मी एक कामगार आहे',
+      'modal-reg-cont':   '🏗 मी एक कंत्राटदार आहे',
+      'modal-worker-title': '👷 कामगार म्हणून सामील व्हा',
+      'modal-worker-p': 'तुमची मुफत प्रोफाइल तयार करा आणि तुमच्या क्षेत्रातील शीर्ष कंत्राटदारांकडून नियुक्त होणे सुरू करा.',
+      'modal-worker-mobile': 'मोबाइल नंबर',
+      'modal-worker-city': 'तुमचे शहर',
+      'modal-worker-skill': 'तुमचे मुख्य कौशल्य',
+      'modal-worker-btn': 'मुफत नोंदणी करा →',
+      'modal-cont-title': '🏗 नोकरी पोस्ट करा',
+      'modal-cont-p': 'तुम्हाला काय हवे ते सांगा आणि आम्ही लगेच सत्यापित कामगारांशी जुळवतो.',
+      'modal-cont-jobtitle': 'नोकरीचे शीर्षक',
+      'modal-cont-jobtitle-ph': 'उदा. 10 सिव्हिल हेल्पर हवे',
+      'modal-cont-workers': 'कामगारांची संख्या',
+      'modal-cont-wage': 'दैनिक मजुरी (₹)',
+      'modal-cont-loc': 'स्थान',
+      'modal-cont-dur': 'कालावधी',
+      'modal-cont-dur-ph': '30 दिवस',
+      'modal-cont-mobile': 'तुमचा मोबाइल',
+      'modal-cont-btn': 'मुफत नोकरी पोस्ट करा →',
+      'success-worker': '🎉 प्रोफाइल नोंदणी झाली! तुम्हाला लवकरच OTP मिळेल.',
+      'success-cont':   '✅ नोकरी पोस्ट झाली! आम्ही 2 तासांत तुमच्या क्षेत्रातील कामगारांशी जुळवतो.',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function applyTranslation(lang) {
+    const t = translations[lang];
+    if (!t) return;
+    currentLang = lang;
+
+    // Helper: set text content (supports innerHTML for em tags)
+    function setText(sel, key, isHTML) {
+      const el = document.querySelector(sel);
+      if (el && t[key] !== undefined) {
+        if (isHTML) el.innerHTML = t[key];
+        else el.textContent = t[key];
+      }
+    }
+    function setAll(sel, key) {
+      document.querySelectorAll(sel).forEach(el => { if (t[key] !== undefined) el.textContent = t[key]; });
+    }
+    function setPlaceholder(sel, key) {
+      const el = document.querySelector(sel);
+      if (el && t[key] !== undefined) el.placeholder = t[key];
+    }
+
+    // NAV
+    setText('[data-i18n="nav-how"]',  'nav-how');
+    setText('[data-i18n="nav-jobs"]', 'nav-jobs');
+    setText('[data-i18n="nav-workers"]','nav-workers');
+    setText('[data-i18n="nav-pricing"]','nav-pricing');
+    setText('[data-i18n="nav-login"]','nav-login');
+    setText('[data-i18n="nav-post"]', 'nav-post');
+
+    // HERO
+    setText('[data-i18n="hero-badge"]','hero-badge');
+    setText('[data-i18n="hero-h1"]',  'hero-h1', true);
+    setText('[data-i18n="hero-p"]',   'hero-p');
+    setText('[data-i18n="hero-btn-worker"]','hero-btn-worker');
+    setText('[data-i18n="hero-btn-cont"]',  'hero-btn-cont');
+    setText('[data-i18n="stat-workers"]',   'stat-workers');
+    setText('[data-i18n="stat-contractors"]','stat-contractors');
+    setText('[data-i18n="stat-jobs"]',      'stat-jobs');
+
+    // SEARCH
+    setPlaceholder('[data-i18n-ph="search-placeholder"]', 'search-placeholder');
+    setText('[data-i18n="search-btn"]', 'search-btn');
+    setText('[data-i18n="loc-all"]',    'loc-all');
+    setText('[data-i18n="cat-all"]',    'cat-all');
+    setText('[data-i18n="cat-const"]',  'cat-const');
+    setText('[data-i18n="cat-factory"]','cat-factory');
+    setText('[data-i18n="cat-event"]',  'cat-event');
+    setText('[data-i18n="cat-elec"]',   'cat-elec');
+
+    // HOW IT WORKS
+    setText('[data-i18n="how-label"]', 'how-label');
+    setText('[data-i18n="how-title"]', 'how-title');
+    setText('[data-i18n="how-sub"]',   'how-sub');
+    setText('[data-i18n="tab-worker"]',    'tab-worker');
+    setText('[data-i18n="tab-contractor"]','tab-contractor');
+    setText('[data-i18n="ws1-h"]','ws1-h'); setText('[data-i18n="ws1-p"]','ws1-p');
+    setText('[data-i18n="ws2-h"]','ws2-h'); setText('[data-i18n="ws2-p"]','ws2-p');
+    setText('[data-i18n="ws3-h"]','ws3-h'); setText('[data-i18n="ws3-p"]','ws3-p');
+    setText('[data-i18n="ws4-h"]','ws4-h'); setText('[data-i18n="ws4-p"]','ws4-p');
+    setText('[data-i18n="cs1-h"]','cs1-h'); setText('[data-i18n="cs1-p"]','cs1-p');
+    setText('[data-i18n="cs2-h"]','cs2-h'); setText('[data-i18n="cs2-p"]','cs2-p');
+    setText('[data-i18n="cs3-h"]','cs3-h'); setText('[data-i18n="cs3-p"]','cs3-p');
+    setText('[data-i18n="cs4-h"]','cs4-h'); setText('[data-i18n="cs4-p"]','cs4-p');
+    setText('[data-i18n="match-title"]','match-title');
+    setText('[data-i18n="match-p"]',    'match-p');
+
+    // FEATURES
+    setText('[data-i18n="feat-label"]','feat-label');
+    setText('[data-i18n="feat-title"]','feat-title');
+    for (let i=1;i<=6;i++) {
+      setText(`[data-i18n="f${i}-h"]`,`f${i}-h`);
+      setText(`[data-i18n="f${i}-p"]`,`f${i}-p`);
+    }
+
+    // JOBS
+    setText('[data-i18n="jobs-label"]','jobs-label');
+    setText('[data-i18n="jobs-title"]','jobs-title');
+    setText('[data-i18n="post-job"]',  'post-job');
+    setAll('[data-i18n="apply-now"]',  'apply-now');
+    setAll('[data-i18n="urgent"]',     'urgent');
+    setAll('[data-i18n="open"]',       'open');
+    setAll('[data-i18n="closing"]',    'closing');
+
+    // WORKERS
+    setText('[data-i18n="workers-label"]','workers-label');
+    setText('[data-i18n="workers-title"]','workers-title');
+    setText('[data-i18n="join-worker"]',  'join-worker');
+    setAll('[data-i18n="contact"]',       'contact');
+    setAll('[data-i18n="avail-now"]',     'avail-now');
+
+    // TESTIMONIALS
+    setText('[data-i18n="testi-label"]','testi-label');
+    setText('[data-i18n="testi-title"]','testi-title');
+    setText('[data-i18n="t1"]','t1');
+    setText('[data-i18n="t2"]','t2');
+    setText('[data-i18n="t3"]','t3');
+
+    // PRICING
+    setText('[data-i18n="pricing-label"]','pricing-label');
+    setText('[data-i18n="pricing-title"]','pricing-title');
+    setText('[data-i18n="pricing-sub"]',  'pricing-sub');
+    setText('[data-i18n="plan-free"]','plan-free'); setText('[data-i18n="free-desc"]','free-desc');
+    setText('[data-i18n="plan-pro"]', 'plan-pro');  setText('[data-i18n="pro-desc"]', 'pro-desc');
+    setText('[data-i18n="plan-ent"]', 'plan-ent');  setText('[data-i18n="ent-desc"]', 'ent-desc');
+    setText('[data-i18n="get-started"]', 'get-started');
+    setText('[data-i18n="start-trial"]', 'start-trial');
+    setText('[data-i18n="contact-sales"]','contact-sales');
+    setText('[data-i18n="most-popular"]', 'most-popular');
+
+    // CTA
+    setText('[data-i18n="cta-title"]','cta-title');
+    setText('[data-i18n="cta-sub"]',  'cta-sub');
+    setText('[data-i18n="cta-w-h"]',  'cta-w-h');
+    setText('[data-i18n="cta-w-p"]',  'cta-w-p');
+    setText('[data-i18n="cta-w-btn"]','cta-w-btn');
+    setText('[data-i18n="cta-c-h"]',  'cta-c-h');
+    setText('[data-i18n="cta-c-p"]',  'cta-c-p');
+    setText('[data-i18n="cta-c-btn"]','cta-c-btn');
+
+    // FOOTER
+    setText('[data-i18n="footer-copy"]','footer-copy');
+    setText('[data-i18n="footer-made"]','footer-made');
+    setText('[data-i18n="footer-for-workers"]','footer-for-workers');
+    setText('[data-i18n="footer-for-contractors"]','footer-for-contractors');
+    setText('[data-i18n="footer-company"]','footer-company');
+
+    // MODALS
+    setText('[data-i18n="modal-login-title"]', 'modal-login-title');
+    setText('[data-i18n="modal-login-mobile"]','modal-login-mobile');
+    setText('[data-i18n="modal-login-otp"]',   'modal-login-otp');
+    setPlaceholder('[data-i18n-ph="modal-login-otp-ph"]','modal-login-otp-ph');
+    setText('[data-i18n="modal-login-send"]',  'modal-login-send');
+    setText('[data-i18n="modal-login-btn"]',   'modal-login-btn');
+    setText('[data-i18n="modal-login-new"]',   'modal-login-new');
+    setText('[data-i18n="modal-login-reg"]',   'modal-login-reg');
+    setText('[data-i18n="modal-reg-title"]',   'modal-reg-title');
+    setText('[data-i18n="modal-reg-worker"]',  'modal-reg-worker');
+    setText('[data-i18n="modal-reg-cont"]',    'modal-reg-cont');
+    setText('[data-i18n="modal-worker-title"]','modal-worker-title');
+    setText('[data-i18n="modal-worker-p"]',    'modal-worker-p');
+    setText('[data-i18n="modal-worker-mobile"]','modal-worker-mobile');
+    setText('[data-i18n="modal-worker-city"]', 'modal-worker-city');
+    setText('[data-i18n="modal-worker-skill"]','modal-worker-skill');
+    setText('[data-i18n="modal-worker-btn"]',  'modal-worker-btn');
+    setText('[data-i18n="modal-cont-title"]',  'modal-cont-title');
+    setText('[data-i18n="modal-cont-p"]',      'modal-cont-p');
+    setText('[data-i18n="modal-cont-jobtitle"]','modal-cont-jobtitle');
+    setPlaceholder('[data-i18n-ph="modal-cont-jobtitle-ph"]','modal-cont-jobtitle-ph');
+    setText('[data-i18n="modal-cont-workers"]','modal-cont-workers');
+    setText('[data-i18n="modal-cont-wage"]',   'modal-cont-wage');
+    setText('[data-i18n="modal-cont-loc"]',    'modal-cont-loc');
+    setText('[data-i18n="modal-cont-dur"]',    'modal-cont-dur');
+    setPlaceholder('[data-i18n-ph="modal-cont-dur-ph"]','modal-cont-dur-ph');
+    setText('[data-i18n="modal-cont-mobile"]', 'modal-cont-mobile');
+    setText('[data-i18n="modal-cont-btn"]',    'modal-cont-btn');
+  }
+
+  // Language toggle buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const langMap = { 'EN': 'en', 'हिंदी': 'hi', 'मराठी': 'mr' };
+      applyTranslation(langMap[this.textContent.trim()] || 'en');
+    });
+  });
+
+  // Override showSuccess to use translated strings
+  function showSuccess(type) {
+    closeModal(type);
+    const t = translations[currentLang];
+    const msg = type === 'worker' ? t['success-worker'] : t['success-cont'];
+    const toast = document.createElement('div');
+    toast.style.cssText = `position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#161B22;border:1px solid #3FB950;color:#3FB950;padding:14px 28px;border-radius:8px;font-size:0.9rem;font-weight:600;z-index:9999;animation:fadeUp 0.3s ease`;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  // Animate elements on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeUp 0.5s ease both';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .job-card, .worker-card, .price-card, .testi-card').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
